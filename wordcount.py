@@ -1,14 +1,15 @@
 import string
+import sys
+import collections
 
 def get_word_count(filepath):
     new_file = open(filepath)
-    word_counts = {}
+    word_counts = collections.Counter()
 
     for line in new_file:
         words = normalize_line(line)
         for word in words:
-            current_count = word_counts.get(word, 0)
-            word_counts[word] = current_count + 1
+            word_counts[word] += 1
 
     new_file.close()
 
@@ -19,6 +20,7 @@ def print_word_count(dictionary):
         print word, count
 
 def normalize_line(line):
+    # string.punctuation contains a string of puncuation marks
     for punctuation in string.punctuation:
         line = line.replace(punctuation, " ")
     new_line = line.rstrip().lower().split(" ")
@@ -26,4 +28,4 @@ def normalize_line(line):
 
 
 
-print_word_count(get_word_count('test.txt'))
+print_word_count(get_word_count(sys.argv[1]))
