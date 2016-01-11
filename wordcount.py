@@ -1,0 +1,29 @@
+import string
+
+def get_word_count(filepath):
+    new_file = open(filepath)
+    word_counts = {}
+
+    for line in new_file:
+        words = normalize_line(line)
+        for word in words:
+            current_count = word_counts.get(word, 0)
+            word_counts[word] = current_count + 1
+
+    new_file.close()
+
+    return word_counts
+
+def print_word_count(dictionary):
+    for word, count in dictionary.iteritems():
+        print word, count
+
+def normalize_line(line):
+    for punctuation in string.punctuation:
+        line = line.replace(punctuation, " ")
+    new_line = line.rstrip().lower().split(" ")
+    return [words for words in new_line if words]
+
+
+
+print_word_count(get_word_count('test.txt'))
